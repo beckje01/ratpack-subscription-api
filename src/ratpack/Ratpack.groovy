@@ -1,7 +1,16 @@
+import beckje01.SubscriptionService
+import ratpack.jackson.JacksonModule
+
 import static ratpack.groovy.Groovy.ratpack
+import static ratpack.jackson.Jackson.json
+
 
 ratpack {
-    handlers {
+    bindings {
+        add new JacksonModule()
+    }
+
+    handlers { SubscriptionService subscriptionService ->
         handler {
             //A very simple handler to check token auth on a header
             if (request.headers['Authorization'] != "Token faketoken") {
@@ -18,7 +27,9 @@ ratpack {
                 get {
                     def cid = request.queryParams['cid']
                     if (cid) {
-                        render "Got CID ${cid}"
+                        subscriptionService.findByCid(cid).then({
+                            render json(it)
+                        })
                     } else {
                         response.status 422
                         response.send("application/json", /{"error": "Must set cid"}/)
@@ -39,8 +50,9 @@ ratpack {
             }
             byMethod {
                 get {
-                    //TODO display subscription
-                    render "GET $id"
+                    subscriptionService.get(id).then({
+                        render json(it)
+                    })
                 }
                 put {
                     //TODO update subscription
