@@ -2,6 +2,17 @@ import static ratpack.groovy.Groovy.ratpack
 
 ratpack {
     handlers {
+        handler {
+            //A very simple handler to check token auth on a header
+            if (request.headers['Authorization'] != "Token faketoken") {
+                response.status(401)
+                //We must send some response or the request will hang.
+                response.send()
+            } else {
+                //We can choose to do nothing but allow the next handler in the chain to deal with the request.
+                next()
+            }
+        }
         handler("subscriptions") {
             byMethod {
                 get {
