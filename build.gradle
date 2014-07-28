@@ -6,6 +6,8 @@ buildscript {
   dependencies {
     classpath "io.ratpack:ratpack-gradle:0.9.7-SNAPSHOT"
     classpath 'com.github.jengelman.gradle.plugins:shadow:1.0.2'
+    classpath 'se.transmode.gradle:gradle-docker:1.2'
+
   }
 }
 
@@ -13,6 +15,9 @@ apply plugin: "ratpack-groovy"
 apply plugin: "idea"
 apply plugin: "eclipse"
 apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'docker'
+
+group= 'beckje01'
 
 repositories {
   jcenter()
@@ -30,4 +35,8 @@ dependencies {
   runtime 'org.slf4j:slf4j-simple:1.7.7'
 
   testCompile "org.spockframework:spock-core:0.7-groovy-2.0"
+}
+
+distDocker {
+    exposePort 5050
 }
