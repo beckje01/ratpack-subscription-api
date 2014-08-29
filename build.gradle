@@ -4,14 +4,14 @@ buildscript {
         maven { url "http://oss.jfrog.org/artifactory/repo" }
     }
     dependencies {
-        classpath "io.ratpack:ratpack-gradle:0.9.7-SNAPSHOT"
+        classpath "io.ratpack:ratpack-gradle:0.9.7"
         classpath 'com.github.jengelman.gradle.plugins:shadow:1.0.2'
         classpath 'se.transmode.gradle:gradle-docker:1.2'
 
     }
 }
 
-apply plugin: "ratpack-groovy"
+apply plugin: "io.ratpack.ratpack-groovy"
 apply plugin: "idea"
 apply plugin: "eclipse"
 apply plugin: 'com.github.johnrengelman.shadow'
